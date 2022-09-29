@@ -1,17 +1,23 @@
 package model.entities;
 
+import model.exceptions.DomainExceptions;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-public class Reservation2 {
+public class Reservation3 {
     private Integer roomNumber;
     private Date checkIn;
     private Date checkOut;
 
     private static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
-    public Reservation2(Integer roomNumber, Date checkIn, Date checkOut) {
+    public Reservation3(Integer roomNumber, Date checkIn, Date checkOut) throws DomainExceptions{
+        if (!checkOut.after(checkIn)) {
+            throw new DomainExceptions("ERRO AO FAZER A RESERVA: A DATA DE CHECKOUT DEVE SER APÓS A DATA DE " +
+                    "CHECKIN");
+        }
         this.roomNumber = roomNumber;
         this.checkIn = checkIn;
         this.checkOut = checkOut;
@@ -38,19 +44,19 @@ public class Reservation2 {
         return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
     }
 
-    public String updateDates(Date checkIn, Date checkOut) {
+    public void updateDates(Date checkIn, Date checkOut) throws DomainExceptions{
         Date now = new Date();
         if (checkIn.before(now) || checkOut.before(now)) {
-            return " AS DATAS PARA ATUALIZAR A RESERVA DEVEM SER DE DATAS" +
-                    " FUTURAS A RESERVA ANTERIOR";
+            throw new DomainExceptions(" AS DATAS PARA ATUALIZAR A RESERVA DEVEM SER DE DATAS" +
+                    " FUTURAS A RESERVA ANTERIOR");
 
         }
         if (!checkOut.after(checkIn)) {
-            return "A DATA DE CHECKOUT DEVE SER APÓS A DATA DE CHECKIN";
+            throw new DomainExceptions(" A DATA DE CHECKOUT DEVE SER APÓS A DATA DE " +
+                    "CHECKIN");
         }
         this.checkIn = checkIn;
         this.checkOut = checkOut;
-        return null;
     }
 
     @Override

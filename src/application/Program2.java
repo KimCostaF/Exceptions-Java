@@ -1,7 +1,7 @@
 package application;
 
 import model.entities.Reservation2;
-import model.entities.Reservation2;
+
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -12,6 +12,7 @@ public class Program2 {
     public static void main(String[] args) throws ParseException {
         //ESSA É A SOLUÇÃO RUIM PARA O PROBLEMA
         // AQUI VAMOS JOGAR A LÓGICA QUE CHECA SE A DATA É DEPOIS OU ANTES DE "NOW" NO METODO UPDATEDATE
+        // Lembrar que o Date now pega a data recente do computador
 
         Scanner sc = new Scanner(System.in);
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
